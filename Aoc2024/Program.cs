@@ -6,6 +6,8 @@ using Aoc2024._1.A;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Formatting.Json;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(collection =>
@@ -13,7 +15,8 @@ var host = Host.CreateDefaultBuilder(args)
         collection.AddTransient<ChallengeFactory>();
         collection.AddTransient<IChallenge, Challenge1A>();
     })
-    .ConfigureLogging(builder => builder.AddConsole())
+    .UseSerilog((context, configuration) => 
+        configuration.WriteTo.Async(x => x.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}")))
     .Build();
 
 await host.StartAsync();
@@ -32,7 +35,8 @@ if (args.Length < 1)
     {
         throw new ApplicationException("Please enter a valid program");
     }
-} else if (args.Length == 1)
+}
+else if (args.Length == 1)
 {
     currentChallenge = args[0];
 }
@@ -47,3 +51,4 @@ await challenge.RunAsync();
 
 
 await host.StopAsync();
+await Log.CloseAndFlushAsync();
