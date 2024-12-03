@@ -3,6 +3,7 @@
 
 using Aoc2024;
 using Aoc2024._1.A;
+using Aoc2024._1.B;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ var host = Host.CreateDefaultBuilder(args)
     {
         collection.AddTransient<ChallengeFactory>();
         collection.AddTransient<IChallenge, Challenge1A>();
+        collection.AddTransient<IChallenge, Challenge1B>();
     })
     .UseSerilog((context, configuration) => 
         configuration.WriteTo.Async(x => x.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}")))
