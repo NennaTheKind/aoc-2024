@@ -1,19 +1,20 @@
-﻿using Microsoft.Extensions.Logging;
+using Aoc2024._2.A;
+using Microsoft.Extensions.Logging;
 
-namespace Aoc2024._2.A;
+namespace Aoc2024._2.B;
 
-public class Challenge2A : IChallenge
+public class Challenge2B : IChallenge
 {
-    private readonly ILogger<Challenge2A> _logger;
+    private readonly ILogger<Challenge2B> _logger;
     private readonly IInputReader<IReadOnlyList<ReactorRecord>> _inputReader;
 
-    public Challenge2A(ILogger<Challenge2A> logger, IInputReader<IReadOnlyList<ReactorRecord>> inputReader)
+    public Challenge2B(ILogger<Challenge2B> logger, IInputReader<IReadOnlyList<ReactorRecord>> inputReader)
     {
         _logger = logger;
         _inputReader = inputReader;
     }
 
-    public string Name { get; } = "2A";
+    public string Name { get; } = "2B";
     public async Task RunAsync()
     {
         var records = await _inputReader.ReadInputAsync();
@@ -26,7 +27,7 @@ public class Challenge2A : IChallenge
         
         _logger.LogInformation("{SafeRecords} safe records", safeRecords);
     }
-
+    
     public bool IsRecordSafe(ReactorRecord record)
     {
         const int maxChange = 3;
